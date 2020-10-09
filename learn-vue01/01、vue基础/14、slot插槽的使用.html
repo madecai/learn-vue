@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <div id="app">
+        <h2>1、插槽slot</h2>
+        <cpn><button>插槽1</button></cpn>
+        <h2>2、有多个值会全部替换</h2>
+        <cpn>
+            <i>插槽2</i>
+            <p>222222</p>
+        </cpn>
+        <h2>3、插槽默认值</h2>
+        <cpn></cpn>
+        <h2>4、具名插槽，不指定slot属性只会替换不指定名字的slot</h2>
+        <cpn>
+            <i>插槽4</i>
+            <p>444444</p>
+            <span slot="head">start</span>
+            <span slot="tail">end</span>
+        </cpn>
+        <h2>
+            4、作用域插槽，在父组件替换的内容，由子组件提供<br>
+            在子组件中使用:data="dlanguage"，在父组件中使用slot-scope="slot"定义插槽变量，使用slot.data取值<br>
+            在2.5.x版本之前必须使用template标签<br>
+            vue3.0版本插槽有改动，使用v-slot
+        </h2>
+        <cpn>
+            <template slot="scopSlot" slot-scope="slot">
+                <ul>
+                    <li v-for="item in slot.data">{{item}}</li>
+                </ul>
+            </template>
+        </cpn>
+    </div>
+
+    <template id="cpn"> 
+        <div>
+            <slot name="head">默认head</slot>
+            <h3>我是组件</h3>
+            <slot><p>插槽默认内容</p></slot>
+            <slot name="scopSlot" :data="dlanguage">默认作用域插槽：{{dlanguage}}</slot>
+            <slot name="tail">默认tail</slot>
+        </div>
+    </template>
+    <script src="../js/vue.js"></script>
+    <script>
+        const app = new Vue({
+            el: '#app',
+            data: {
+
+            },
+            components: {
+                cpn: {
+                    template: cpn,
+                    data() {
+                        return {
+                            dlanguage: ['JavaScript', 'Java', 'C++', 'Swift', 'Python', 'Go', 'C#']
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

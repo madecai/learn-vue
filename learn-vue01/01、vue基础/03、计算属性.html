@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <h2>1、计算属性，连接firstName和lastName</h2>
+        <div>{{firstName + ' ' + lastName}}</div>
+        <div>{{firstName}} {{lastName}}</div>
+        <h3>1.1、每次调用都会执行，而计算属性会走缓存，如果没有变化只执行一次</h3>
+        <span>{{getFullName()}}--{{getFullName()}}</span>
+        <h3>1.2、这里无需带小括号fullName()，如果没有变化只执行一次</h3>
+        <span>{{fullName}}--{{fullName}}</span>
+        <h2>2、计算属性完整写法，连接firstName和lastName</h2>
+        <span>{{fullName2}}</span>
+        <h2>3、计算书的总价</h2>
+        <span>{{totalPrice}}</span>
+    </div>
+    <script src="../js/vue.js"></script>
+    <script>
+        const app = new Vue({
+            el: "#app",
+            data: {
+                firstName: 'Li',
+                lastName: 'Xiaolong',
+                books: [
+                    {id: 110, name: 'Unix编程艺术', price: 88},
+                    {id: 111, name: '代码大全', price: 78},
+                    {id: 112, name: '深入理解计算机原理', price: 55},
+                    {id: 113, name: '现代操作系统', price: 33}
+                ]
+            },
+            // 是有缓存的，只会调用一次
+            computed: {
+                fullName: function() {
+                    console.log("计算属性 fullName 执行了")
+                    return this.firstName + ' ' + this.lastName
+                },
+                totalPrice: function() {
+                    let result = 0;
+                    // 1、遍历方式一
+                    // for(let i in this.books) {
+                    //     result += this.books[i].price
+                    // }
+                    // 2、遍历方式二
+                    for (let item of this.books) {
+                        result += item.price
+                    }
+                    return result;
+                },
+                fullName2:  {
+                    // 一般不需要set属性，没有set方法就是只读属性
+                    set: function(newValue) {
+                        console.log("----" + newValue)
+                    },
+                    get: function() {
+                        return this.firstName + ' ' + this.lastName
+                    }
+                }
+            },
+            methods: {
+                getFullName: function() {
+                    console.log("getFullName 执行了")
+                    return this.firstName + ' ' + this.lastName
+                }
+            }
+        });
+    </script>
+</body>
+</html>

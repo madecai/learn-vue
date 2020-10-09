@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <h2>1、条件判断</h2>
+        <span v-if="isShow">if显示：{{message}}</span>
+        <span v-else-if="score >= 80">v-else-if显示：良好</span>
+        <span v-else-if="score >= 60">v-else-if显示：及格</span>
+        <span v-else>v-else显示：不及格</span>
+        <h2>
+            2、vue虚拟DOM复用元素问题，这里输入后再切换input里的value并没有清除，
+            是因为vue出于性能考虑，两个显隐互斥的元素vue不会都放入虚拟dom，解决办法是加一个key标识
+        </h2>
+        <span v-if="isUser">
+            <!-- for的作用是点击label可以定位光标到指定文本框 -->
+            <label for="username">用户账号</label>
+            <input type="text" id="username" placeholder="用户账号" key="aaa"/>
+        </span>
+        <span v-else>
+            <label for="email">用户邮箱</label>
+            <input type="text" id="email" placeholder="用户邮箱" key="bbb"/>
+        </span>
+        <button @click="isUser = !isUser">切换类型</button>
+        <h2>3、v-show控制组件显隐，性能更好，始终在虚拟Dom中，频繁控制时使用v-show</h2>
+        <span v-show="isShow">v-show="false"：{{message}}</span>
+        <span v-show="true">v-show="true"：{{message}}</span>
+    </div>
+    <script src="../js/vue.js"></script>
+    <script>
+        const app = new Vue({
+            el: "#app",
+            data: {
+                message: '你好啊！',
+                isShow: false,
+                score: 50,
+                isUser: true
+            },
+            methods: {
+              
+            }
+        });
+    </script>
+</body>
+</html>

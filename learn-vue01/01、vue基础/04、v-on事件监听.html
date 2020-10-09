@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <h2>1、语法糖，v-on可以简写成@</h2>
+        <button @click="btn1Click()">按钮1</button>
+        <h2>2、函数的小括号可以不写，如果不写小括号，或者写了不传参数，那么会默认传入event对象</h2>
+        <button @click="btn2Click('aaa')">按钮2</button>
+        <button @click="btn2Click">按钮2</button>
+        <h2>3、传递event的同时，还要传递其他参数，使用$event传入event</h2>
+        <button @click="btn3Click($event, 'aaa')">按钮3</button>
+        <h2>4、阻止事件冒泡传递，点击此按钮divClick会执行，使用.stop阻止</h2>
+        <div @click="divClick">
+            <button @click.stop="btn4Click">按钮4</button>
+        </div>
+        <h2>5、阻止默认事件，使用.prevent阻止</h2>
+        <form action="aaaaa">
+            <input type="submit" value="提交" @click.prevent="submitClick"/>
+        </form>
+        <h2>6、监听键盘点击，keyup/keydown</h2>
+        <input type="text" @keyup="keyup"/>
+        <!-- 只监听enter -->
+        <input type="text" @keyup.enter="keyup"/>
+        <!-- 只监听键值为13的 -->
+        <input type="text" @keyup.13="keyup"/>
+        <h2>7、只触发一次</h2>
+        <button @click.once="onceClick">按钮</button>
+        <h2>8、监听自定义组件，使用.native</h2>
+        <!-- <mycomponent></mycomponent> -->
+    </div>
+    <script src="../js/vue.js"></script>
+    <script>
+        const app = new Vue({
+            el: "#app",
+            data: {
+
+            },
+            methods: {
+                btn1Click() {
+                    console.log("btn1Click点击事件执行了");
+                },
+                btn2Click(event) {
+                    console.log(event)
+                },
+                btn3Click(event, arg1) {
+                    console.log(event)
+                    console.log(arg1)
+                },
+                divClick() {
+                    console.log("div点击事件执行了");
+                },
+                btn4Click() {
+                    console.log("btn4Click点击事件执行了");
+                },
+                submitClick() {
+                    console.log("submitClick表单提交");
+                },
+                keyup() {
+                    console.log("keyup执行了");
+                },
+                onceClick() {
+                    console.log("onceClick执行了");
+                }
+            }
+        });
+    </script>
+</body>
+</html>

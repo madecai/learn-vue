@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="app">
+        <h2>1、输出</h2>
+        <span>{{message}}</span>
+        <h2>2、被v-once标记，修改message这里不会改变 </h2>
+        <span v-once>{{message}}</span>
+        <h2>3、以html形式展示</h2>
+        <span v-html="url"></span>
+        <h2 v-pre>4、与{{message}}相同，如果标签体有内容会覆盖掉</h2>
+        <span v-text="message"></span>
+        <h2>5、原封不动，直接输出内容</h2>
+        <span v-pre>{{message}}</span>
+        <h2>6、vue初始化完成后会将v-cloak属性移除</h2>
+        <span v-cloak>{{message}}</span>
+        <h2>7、遍历输出</h2>
+        <ul>
+            <li v-for="item in movies">{{item}}</li>
+        </ul>
+        <h2>8、带索引遍历输出</h2>
+        <ul>
+            <li v-for="(item, index) in movies">{{index}}-{{item}}</li>
+        </ul>
+        <h2>9、v-on绑定点击函数</h2>
+        <h2>当前计数:{{counter}}</h2>
+        <!-- <button v-on:click="counter++">+</button>
+        <button v-on:click="counter--">-</button> -->
+        <button v-on:click="add">+</button>
+        <!-- 语法糖，可以用@替换v-on: -->
+        <button @click="sub">-</button>
+    </div>
+
+    <script src="../js/vue.js"></script>
+    <script>
+        const app = new Vue({
+            el: "#app",
+            data: {
+                message: "你好啊！",
+                movies: ['大话西游', '星际穿越', '盗梦空间', '少年派'],
+                counter: 0,
+                url: "<a href='http://www.baidu.com'>百度<a>"
+            },
+            methods: {
+                add: function () {
+                    console.log('add 被执行')
+                    this.counter++
+                },
+                sub: function () {
+                    console.log('sub 被执行')
+                    this.counter--
+                }
+            },
+            beforeCreate: function() {
+                console.log('执行beforeCreate')
+            },
+            created: function() {
+                console.log('执行create')
+            },
+            mounted: function() {
+                console.log('执行mounted')
+            }
+        });
+    </script>
+
+</body>
+
+</html>

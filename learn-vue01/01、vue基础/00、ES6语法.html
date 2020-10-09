@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <h2>1、let作用域</h2>
+        <button>按钮一</button>
+        <button>按钮二</button>
+        <button>按钮三</button>
+        <button>按钮四</button>
+        <h2>2、属性的增强写法</h2>
+        <h2>3、函数的增强写法</h2>
+        <h2>4、for循环</h2>
+        <h2>5、es6中的class</h2>
+        <h2>6、箭头函数this的问题</h2>
+        <h2>7、es6对象的解构</h2>
+        <h2>8、es6数组的解构</h2>
+    </div>
+    <script>
+        // 1、let作用域
+        // 无论点第几个按钮，都是现实第四个
+        // var btns  = document.getElementsByTagName("button");
+        // for(var i = 0; i < btns.length; i++) {
+        //     btns[i].addEventListener('click', function() {
+        //         console.log("第" + i + "个按钮被点击");
+        //     });
+        // }
+        // 解决办法一，闭包，被var标识的变量没有块级作用域{var aaa}，而有function级作用域
+        // var btns  = document.getElementsByTagName("button");
+        // for(var i = 0; i < btns.length; i++) {
+        //     (function(i){
+        //         btns[i].addEventListener('click', function() {
+        //             console.log("第" + i + "个按钮被点击");
+        //         });
+        //     })(i);
+        // }
+        // 解决办法二，使用ES6的let，被let标识的变量有块级作用域
+        var btns  = document.getElementsByTagName("button");
+        for(let i = 0; i < btns.length; i++) {
+            btns[i].addEventListener('click', function() {
+                console.log("第" + i + "个按钮被点击");
+            });
+        }
+        // 2、属性的增强写法
+        const name = 'xiaoming';
+        const age = '11';
+        // es5中写法
+        const es5Obj = {
+            name: name,
+            age: age
+        }
+        console.log('2、属性的增强写法', es5Obj);
+        // es6中写法
+        const es6Obj = {
+            name,
+            age
+        }
+        console.log('2、属性的增强写法', es6Obj);
+        // 3、函数的增强写法
+        // es5中写法
+        const es5FunObj = {
+            run: function() {
+
+            },
+            eat: function() {
+
+            }
+        }
+        // es6中写法
+        const es6FunObj = {
+            run() {
+
+            },
+            eat() {
+                
+            }
+        }
+
+        // 4、for循环
+        // for (let index in this.books) {}
+        // for (let item of this.books) {}
+        // books.forEach(item => {});
+        // books.map(book => {返回值});
+        // books.reduce((preValue, book)=> {返回值}, 0); // 0为初始值
+
+        // 5、es6中的class
+        class Person {
+            constructor (name ,age) {
+                // 构造器
+            }
+
+            run() {
+                console.log(this.name + '在奔跑');
+            }
+        }
+
+        // 6、箭头函数this的问题
+        // 箭头函数会向外查找最近作用域的this
+        const obj = {
+            aaa() {
+                setTimeout(function(){
+                    console.log('6、箭头函数this的问题-1:', this); // Window
+                    setTimeout(function(){
+                        console.log('6、箭头函数this的问题-3:',this); // Window
+                    });
+                });
+                setTimeout(() => {
+                    console.log('6、箭头函数this的问题-2:',this); // obj
+                    setTimeout(() => {
+                        console.log('6、箭头函数this的问题-4:',this); // obj，向外查找一层，发现没有，再找一层，直到找到this
+                    });
+                });
+            }
+        }
+
+        obj.aaa();
+        
+        // 7、es6对象的解构
+        const info = {
+            infoName: 'zhangsan',
+            infoDesc: 'dsfasdfs'
+        }
+
+        const {infoName, infoDesc} = info; // 顺序可以换，名字需要对应
+        console.log('7、', infoName);
+
+        // 形参解构
+        const printInfo = ({infoName, infoDesc}) =>  {
+            console.log('7、', infoName);
+        }
+        printInfo(info);
+        
+        //8、es6数组的解构
+        const infoArr = ['111', '222', '333']
+        const [arg0, arg1, arg2] = infoArr;
+        console.log('8、', arg0)
+
+    </script>
+</body>
+</html>

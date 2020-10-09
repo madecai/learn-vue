@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <h2>一、css-loader的使用</h2>
+        <h3>1、在官网文档中找到css-loader配置</h3>
+        <h3>2、安装：npm install --save-dev css-loader 解析并加载CSS文件</h3>
+        <h3>3、安装：npm install style-loader --save-dev 将导出的样式加到DOM中</h3>
+        <h3>4、导入css文件 import css from 'file.css';</h3>
+        <h3>5、在webpack.config.js中配置module</h3>
+        <h3>6、配置package.json中的build选项</h3>
+        <h3>7、执行打包：node run build</h3>
+        <h2>二、打包.less文件</h2>
+        <h3>1、安装 less-loader 和 less：npm install --save-dev less-loader less</h3>
+        <p>### less-loader用于加载，less用于将less文件转化成css</p>
+        <p>### 这里我安装失败了，原因webpack版本低，升级webpack或者选择低版本的less-loader</p>
+        <p>### 我选择了升级webpack到最新版本：cnpm install --save-dev webpack</p>
+        <p>### 同时升级到4.0后执行webpack提示安装webpack-cli（npm install -D webpack-cli），原因4.0以后需要cli</p>
+        <h3>2、配置webpack.config.js</h3>
+        <h3>3、导入less文件</h3>
+        <h3>4、执行打包： npm run build</h3>
+        <h2>三、打包背景图</h2>
+        <h3>1、添加css样式</h3>
+        <h3>2、安装url-loader：npm install --save-dev url-loader</h3>
+        <h3>3、配置webpack.config.js</h3>
+        <h3>4、此时执行npm run build 会报错缺少file-loader</h3>
+        <p>### 小于limit（在webpack.config.js中配置）的文件的url会直接转成base64字符串传输，
+            大于limit的使用file形式传输，所以这里需要安装file-loader，只安装即可，无需其他配置</p>
+        <p>### 执行安装：cnpm install --save-dev file-loader</p>
+        <p>### 此时大于limit的背景图报ERR_FILE_NOT_FOUND，原因是打包到dist后路径改变了，文件名也变成了hash值，
+            此时需要配置打包的文件路径及文件文件名规则</p>
+        <p>### 文件名规则：name: 'img/[name].[hash:8].[ext]'，[hash:8]代表8位hash </p>
+        <p>### 在webpack.config.js中配置资源的查找路径： publicPath: 'dist/'</p>
+        <div class="favoriteBg">小于8kb的背景图</div>
+        <div class="userBg">大于8kb的背景图</div>
+        <h2>四、ES6转ES5语法</h2>
+        <h3>官网为env方式配置，这里采用简单方式配置</h3>
+        <h3>执行安装命令：cnpm install --save-dev babel-loader@7 babel-core babel-preset-es2015</h3>
+        <h3>配置webpack.config.js</h3>
+        <h3>执行：npm run build，查看bundle.js发现es6中的let、const等都消失了</h3>
+    </div>
+    <script src="./dist/bundle.js"></script>
+</body>
+</html>

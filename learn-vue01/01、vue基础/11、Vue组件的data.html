@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <h2>组件中的data一定是一个函数，因为每个组件的data不是共享的，每次回调data函数返回一个新对象</h2>
+       <mycpn></mycpn>
+       <mycpn></mycpn>
+    </div>
+    <template id="mycpn">
+        <div>
+           计数器：{{counter}}
+           <button @click="decrement">-</button>
+           <button @click="increment">+</button>
+        </div>
+    </template>
+    <script src="../js/vue.js"></script>
+    <script>
+        Vue.component('mycpn',{
+            template: '#mycpn',
+            data() {
+                return {
+                    counter: 0
+                }
+            },
+            methods: {
+                decrement() {
+                    this.counter--;
+                },
+                increment() {
+                    this.counter++;
+                }
+            }
+        })
+        const app = new Vue({
+            el: '#app'
+        });
+
+    </script>
+</body>
+</html>

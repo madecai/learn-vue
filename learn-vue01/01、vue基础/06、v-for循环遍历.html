@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <h2>1、没有使用索引值index</h2>
+        <ul>
+            <li v-for="item in names">{{item}}</li>
+        </ul>
+        <h2>2、使用索引值index，第一个值是item，第二个值是index</h2>
+        <ul>
+            <li v-for="(item, index) in names">{{index}}-{{item}}</li>
+        </ul>
+        <h2>3、遍历对象，这种方式拿到的是value</h2>
+        <ul>
+            <li v-for="value in person">{{value}}</li>
+        </ul>
+        <h2>4、遍历对象，第一个值是value，第二个值是key</h2>
+        <ul>
+            <li v-for="(value, key) in person">{{key}}-{{value}}</li>
+        </ul>
+        <h2>5、遍历对象，第一个值是value，第二个值是key，第三个是index</h2>
+        <ul>
+            <li v-for="(value, key, index) in person">{{index}}-{{key}}-{{value}}</li>
+        </ul>
+        <h2>
+            6、Vue渲染完数组后，再从中间插入元素，diff算法会影响性能，所以使用v-for时尽量使用唯一key标识，
+            key中不能用index，因为会变，数组插入元素使用app.letters.splice(2, 0, 'F')
+        </h2>
+        <!-- splice
+            arg1:索引
+            arg2:要删除的元素个数(如果不指定就删除所有后面的元素)
+            arg3:插入的元素（可以不指定，也可指定多个，是一个可变数组） -->
+        <ul>
+            <li v-for="(item, index) in letters" :key="item">{{index}}-{{item}}</li>
+        </ul>
+        <h2>7、有些方式改变数组是做不到响应式的</h2>
+        <h3>能做到响应式：</h3>
+        <p>
+            1、app.letters.unshift('aaa') 头加<br>
+            2、app.letters.push('bbb') 尾加<br>
+            3、app.letters.pop() 头删<br>
+            4、app.letters.shift() 尾删<br>
+            5、app.letters.splice() 删除/插入/替换<br>
+            6、app.letters.sort()<br>
+            7、app.letters.reverse()<br>
+        </p>
+        <h3>不能做到响应式：</h3>
+        <p>1、app.letters[0] = 'aaa' 
+            可以使用app.letters.splice(0, 1, 'aaa')，
+            也可使用Vue.set(app.letters, 0, 'aaa')</p>
+        <ul>
+            <li v-for="(item, index) in letters">{{index}}-{{item}}</li>
+        </ul>
+        <h2>8、有些方式改变对象是做不到响应式的</h2>
+        <h3>做不到响应式</h3>
+        <p>新增元素：person.xxx = '1111'</p>
+        <p>删除元素：delete person.name</p>
+        {{person}}
+    </div>
+    <script src="../js/vue.js"></script>
+    <script>
+        const app = new Vue({
+            el: '#app',
+            data: {
+                names: ['why','kobe','james','curry'],
+                person: {name: 'why', age: 11, sex: 'male'},
+                letters: ['A', 'B', 'C', 'D', 'E']
+            },
+            methods: {
+
+            }
+        });
+    </script>
+</body>
+</html>

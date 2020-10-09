@@ -1,0 +1,11 @@
+body {
+    background-color: #e1e1e1;
+}
+.favoriteBg {
+    width:200px; height:200px;
+    background: url('../img/favorite.png');
+}
+.userBg {
+    width:200px; height:200px;
+    background: url('../img/user.png');
+}

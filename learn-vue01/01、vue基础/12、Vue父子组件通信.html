@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <h2>
+            1、父传子，子组件定义props，然后将父组件的value传递过去，<br>
+            如果没有写冒号，就不会从父组件找data，而是把当前字符串传递过去<br>
+            如果props中使用驼峰命名(childMovies)，那么传递时需要转换一下(child-movies)，v-bind不支持驼峰
+        </h2>
+        <cpn :childmessage="message" customstr="自定义字符串传递过去" :child-movies="movies"></cpn>
+        <h2>
+            2、父传子，指定类型、默认值，还可以指定required，<br>
+            如果默认值是对象或者数组时，默认值必须是一个函数，<br>
+            支持的类型有：String, Number, Boolean, Array, Object, Date, Function, Symbol（基本数据类型），<br>
+            也可以指定自定义类型，<br>
+            也可以使用validator自定义校验
+        </h2>
+        <cpn></cpn>
+        <h2>
+            3、子传父，使用this.$emit发射事件，<br>
+            接受时，第一个参数默认为发射时的data，<br>
+            事件名不能用驼峰命名，而在脚手架中则可以
+        </h2>
+        <cpn :child-movies="movies" @child-movies-click-emit="moviesClick"></cpn>
+        <h2>
+            4、在父组件中拿到子组件对象，使用this.$children拿到所有子组件对象数组（不常用，需要指定下标），或者this.$refs.cpn4<br>
+                子访问父（不推荐），使用this.$parent，如果父组件是跟组件，那么是一个Vue对象，否则是VueComponent对象<br>
+                访问跟组件，使用this.$root
+        </h2>
+        <cpn ref="cpn4"></cpn>
+        <button @click="showChildrenMessage">按钮</button>
+
+    </div>
+    <template id="cpn">
+        <div>
+            <h3>我是自定义组件</h3>
+            <p>{{childmessage}}</p>
+            <p>{{customstr}}</p>
+            <button v-for="item in childMovies" @click="childMoviesClick(item)">{{item}}</button>
+        </div>
+    </template>
+    <script src="../js/vue.js"></script>
+    <script>
+
+        const cpn = {
+            template: '#cpn',
+            // 1、数组的方式
+            // props: ['childmessage', 'customstr', 'childmovies']
+            // 2、对象的方式，可以指定类型，默认值
+            props: {
+                childmessage: String,
+                customstr: {
+                    type: String,
+                    default: 'aaaaaaa',
+                    required: false
+                },
+                // 如果默认值是对象或者数组时，默认值必须是一个函数
+                childMovies: {
+                    type: Array,
+                    default() {
+                        return [];
+                    },
+                    validator(value) {
+                        return value.indexOf('海王') != -1;
+                    }
+                }
+
+            },
+            data() {
+                return {name: '子组件属性'}
+            },
+            methods: {
+                childMoviesClick(itme) {
+                    // 发射事件
+                    console.log('childMoviesClick发射事件');
+                    this.$emit('child-movies-click-emit', itme);
+                },
+                showMessage() {
+                    console.log('子组件方法被调用');
+                    this.$parent.showMessage();
+                }
+            }
+        }
+
+        const app = new Vue({
+            el: '#app',
+            data: {
+                message: '你好啊！',
+                movies: ['海贼王', '海王', '假劣比海盗', '海尔兄弟']
+            },
+            components: {
+                // ES6写法
+                cpn
+            },
+            methods: {
+                moviesClick(item) {
+                    console.log('moviesClick接收事件', item);
+                },
+                showMessage() {
+                    console.log('父组件方法被调用')
+                },
+                showChildrenMessage() {
+                    console.log(this.$children);
+                    console.log(this.$refs);
+                    this.$children[0].showMessage();
+                    this.$refs.cpn4.showMessage();
+                    console.log("通过this.$children[0]拿到的", this.$children[0].name);
+                    console.log("通过this.$refs.cpn4.name拿到的", this.$refs.cpn4.name);
+                }
+            }
+        });
+    </script>
+</body>
+</html>

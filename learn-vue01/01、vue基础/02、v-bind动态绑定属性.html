@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .active {
+            color: red
+        }
+
+        .underline {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <h2>1、动态绑定属性v-bind</h2>
+        <img v-bind:src="imgUrl"></img>
+        <a v-bind:href="baiduUrl">百度</a>
+        <h2>2、语法糖，省略v-bind，简洁写法</h2>
+        <a :href="baiduUrl">百度</a>
+        <h2>3、v-bind动态绑定class(对象语法)，如果已有class会去并集</h2>
+        <span class="title" :class="{active: isActive, underline: isUnderline}">{{message}}</span>
+        <button @click="convertStyle">切换样式</button>
+        <h2>4、v-bind动态绑定class(对象语法)，方式二</h2>
+        <span :class="getSpanClasses()">{{message}}</span>
+        <h2>5、v-bind动态绑定class(数组语法)，写法同class="active underline"</h2>
+        <span :class="['active', 'underline']">{{message}}</span>
+        <h2>6、v-bind动态绑定class(数组语法)，方式二</h2>
+        <span :class="[active, underline]">{{message}}</span>
+        <h2>7、v-bind动态绑定style，'50px'必须带单引号，否则会把50px当做变量从vue的data中查找</h2>
+        <span :style="{fontSize: '50px', backgroundColor: finalColor}">{{message}}</span>
+        <h2>8、v-bind动态绑定style(数组语法)，不常用</h2>
+        <span :style="[{fontSize: '50px'},{backgroundColor: finalColor}]">{{message}}</span>
+    </div>
+
+    <script src="../js/vue.js"></script>
+    <script>
+        const app = new Vue({
+            el: "#app",
+            data: {
+                message: '你好啊！',
+                imgUrl: "https://cn.vuejs.org/images/logo.png",
+                baiduUrl: "http://www.baidu.com",
+                isActive: true,
+                isUnderline: true,
+                active: 'active',
+                underline: 'underline',
+                finalColor: 'red'
+            },
+            methods: {
+                convertStyle: function () {
+                    this.isActive = !this.isActive;
+                },
+                getSpanClasses: function() {
+                    return {active: this.isActive, underline: this.isUnderline};
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

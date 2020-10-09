@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <cpn :cnumber1="number1" 
+        :cnumber2="number2"
+        @num1change="num1change"
+        @num2change="num2change"></cpn>
+        父组件中的number1：{{number1}}
+    </div>
+    <template id="cpn">
+        <div>
+            <h2>1、此种方式改变数据时vue会报错警告，不应该直接改变子属性props</h2>
+            <input type="text" v-model="cnumber1"/>
+            {{cnumber1}}
+            <input type="text" v-model="cnumber2"/>
+            {{cnumber2}}
+            <h2>2、建议使用data或者computed初始化props，然后再绑定</h2>
+            <input type="text" v-model="dnumber1"/>
+            {{dnumber1}}
+            <input type="text" v-model="dnumber2"/>
+            {{dnumber2}}
+            <h2>3、父子组件属性实现双向绑定</h2>
+            <input type="text" :value="dnumber1" @input="num1change"/>
+            {{dnumber1}}
+            <input type="text" :value="dnumber2" @input="num2change"/>
+            {{dnumber2}}
+        </div>
+    </template>
+    <script src="../js/vue.js"></script>
+    <script>
+        const app = new Vue({
+            el: '#app',
+            data: {
+                number1: 1,
+                number2: 2
+            },
+            methods: {
+                num1change(value){
+                    console.log('子组件发射事件的data类型', typeof value);
+                    this.number1 = parseFloat(value);
+                },
+                num2change(value) {
+                    console.log('子组件发射事件的data类型', typeof value);
+                    this.number2 = parseFloat(value);
+                }
+            },
+            components: {
+                cpn: {
+                    template: '#cpn',
+                    props: {
+                        cnumber1: Number,
+                        cnumber2: Number
+                    },
+                    data() {
+                        return {
+                            dnumber1: this.cnumber1,
+                            dnumber2: this.cnumber2
+                        }
+                    },
+                    methods: {
+                        num1change(evnet) {
+                            this.dnumber1 = event.target.value;
+                            this.$emit('num1change', this.dnumber1);
+                        },
+                        num2change(evnet) {
+                            this.dnumber2 = event.target.value;
+                            this.$emit('num2change', this.dnumber2);
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

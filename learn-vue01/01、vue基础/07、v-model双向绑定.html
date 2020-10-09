@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <h2>1、v-model双向绑定</h2>
+        <input type="text" v-model="message"/>
+        |当前文本框内容：{{message}}
+        <h2>2、v-model双向绑定其实是一个语法糖，背后包含两个指定，使用:value取值，使用@input监听</h2>
+        <input type="text" :value="message" @input="message = $event.target.value"/>
+        <h2>3、v-model双向绑定单选框，name属性可以省略</h2>
+        <label for="male">
+            <input type="radio" id="male" value="male" v-model="sex">男
+        </label>
+        <label for="female">
+            <input type="radio" id="female" value="female" v-model="sex">女
+        </label>
+        |选择的性别是：{{sex}}
+        <h2>4、v-model双向绑定checkbox单选框</h2>
+        <label for="agree">
+            <input type="checkbox" id="agree" v-model="isAgree">同意协议
+        </label>
+        |当前选择的是：{{isAgree}}
+        <button :disabled="!isAgree">下一步</button>
+        <h2>5、v-model双向绑定checkbox多选框</h2>
+        <label for="basketball">
+            <input type="checkbox" id="basketball" value="basketball" v-model="hobbies">篮球
+        </label>
+        <label for="football">
+            <input type="checkbox" id="football" value="football" v-model="hobbies">足球
+        </label>
+        <label for="pingpong">
+            <input type="checkbox" id="pingpong" value="pingpong" v-model="hobbies">乒乓球
+        </label>
+        |当前选择的是：{{hobbies}}
+        <h2>6、v-model双向绑定select下拉框单选</h2>
+        <select v-model="fruit">
+            <option value="banana">香蕉</option>
+            <option value="apple">苹果</option>
+            <option value="orange">橘子</option>
+        </select>
+        |当前选择的是：{{fruit}}
+        <h2>7、v-model双向绑定select下拉框多选</h2>
+        <select v-model="fruits" multiple>
+            <option value="banana">香蕉</option>
+            <option value="apple">苹果</option>
+        </select>
+        |当前选择的是：{{fruits}}
+        <h2>8、input中的值绑定（数据字典）</h2>
+        <label :for="item.dataCode" v-for="item in hobbiesDict">
+            <input type="checkbox" :id="item.dataCode" :value="item.dataCode" v-model="hobbies">{{item.dataName}}
+        </label>
+        <h2>9、v-model修饰符lazy，失去焦点时才绑定</h2>
+        <input type="text" v-model.lazy="message"/>
+        |当前文本框内容：{{message}}
+        <h2>10、v-model修饰符number，使绑定的值转换为number类型，如果没有.number，类型会一直为string</h2>
+        <input type="number" v-model.number="age"/>
+        值：{{age}}，类型：{{typeof age}}
+        <h2>11、v-model修饰符trim，去除空格</h2>
+        <input type="text" v-model.trim="message"/>
+        |当前文本框内容：{{message}}
+    </div>
+    <script src="../js/vue.js"></script>
+    <script>
+        const app = new Vue({
+            el: '#app',
+            data: {
+                message: '你好啊',
+                sex: 'male',
+                isAgree: false,
+                hobbies: [],
+                fruit: 'apple',
+                fruits: [],
+                hobbiesDict: [
+                    {dataCode: 'basketball', dataName: '篮球'},
+                    {dataCode: 'football', dataName: '足球'},
+                    {dataCode: 'pingpong', dataName: '乒乓球'}
+                ],
+                age: ''
+            }
+        });
+    </script>
+</body>
+</html>

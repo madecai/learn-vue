@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <h2>1、使用npm init后，生成package.json文件</h2>
+        <h2>2、新建webpack.config.js指定入口、出口</h2>
+        <h2>3、然后直接执行webpack即可生成bundle.js</h2>
+        <h2>4、使用npm run xxx可以执行package.json文件中的script中的命令，例如npm run build</h2>
+        <h2>5、局部打包，局部安装一个webpack，因为有肯能需要和全局的webpack不同的版本，使用命令：npm install webpack@3.6.0 --save-dev</h2>
+        <p>--save-dev为了开发时依赖，运行时不依赖</p>
+        <p>安装完成后，发现package.json中多一个devDependencies属性，意思是开发时依赖</p>
+        <p>然后执行node_modules/.bin/webpack就是局部的webpack打包了（配置在package.json中script命令：webpack，会优先使用局部的，局部没有再使用全局的）</p>
+        <h2>6、-D相当于--save-dev的简写，-S相当于--save的简写</h2>
+    </div>
+    <script src="./dist/bundle.js"></script>
+</body>
+</html>

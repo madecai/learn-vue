@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <h2>1、安装：cnpm install --save-dev webpack-dev-server</h2>
+        <p>### 基于node的express框架，可以热启动，服务启动会将输出文件夹的文件加载到内存中，
+            我们修改文件后dist文件夹中内容并不会改变，而是重新写入内存</p>
+        <h2>2、配置webpack.config.js文件</h2>
+        <p>### contentBase:服务于哪个文件夹，默认是跟文件夹</p>
+        <p>### port: 端口号默认8080</p>
+        <p>### inline: 页面实时刷新</p>
+        <p>### historyApiFallback: 在SPA页面中，依赖HTML5的history模式</p>
+        <h2>3、配置package.json的脚本 "dev": "webpack-dev-server"</h2>
+        <p>### 直接执行webpack-dev-server会报错，因为直接执行是找的全局的</p>
+        <p>### 脚本方式配置会优先找局部的，没有再找全局的</p>
+        <h2>4、执行npm run build</h2>
+        <h2>5、执行npm run dev</h2>
+        <h2>6、可以在package.json的脚本中加--open，这样就会自动打开浏览器</h2>
+    </div>
+</body>
+</html>
